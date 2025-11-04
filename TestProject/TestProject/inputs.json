@@ -1,0 +1,8 @@
+{
+  "correctUsername": "standard_user",
+  "correctPassword": "secret_sauce",
+  "sauceDemoUrl": "https://www.saucedemo.com",
+  "incorrectUsername": "standardddd_user",
+  "incorrectPassword": "secretttt_sauce",
+  
+}
