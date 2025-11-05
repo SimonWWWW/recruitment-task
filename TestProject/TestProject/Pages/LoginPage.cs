@@ -1,15 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestProject.Pages
 {
+    /// <summary>
+    ///     Login page class.
+    /// </summary>
     public class LoginPage
     {
         #region Constants
@@ -62,6 +59,12 @@ namespace TestProject.Pages
 
         #region Constructors
 
+        /// <summary>
+        ///     Login page constructor.
+        /// </summary>
+        /// <param name="driver">
+        ///     IWebDriver.
+        /// </param>
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -71,7 +74,21 @@ namespace TestProject.Pages
 
         #region Methods
 
-
+        /// <summary>
+        ///     Login using username and password.
+        /// </summary>
+        /// <param name="username">
+        ///     Username.
+        /// </param>
+        /// <param name="password">
+        ///     Password.
+        /// </param>
+        /// <param name="wait">
+        ///     WebDriverWait.
+        /// </param>
+        /// <param name="errorExpected">
+        ///     True if is error expected, otherwise false;
+        /// </param>
         public void Login(string username, string password, WebDriverWait wait, bool errorExpected = false)
         {
             if (errorExpected)
@@ -86,11 +103,11 @@ namespace TestProject.Pages
             this.InsertUsername(username);
             this.InsertPassword(password);
             this.LoginButtonClick();
+
             if (!errorExpected)
             {
                 wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
             }
-
         }
 
         /// <summary>
@@ -153,6 +170,9 @@ namespace TestProject.Pages
             }
         }
 
+        /// <summary>
+        ///     Close error using button.
+        /// </summary>
         public void CloseErrorButtonClick()
         {
             try
@@ -227,7 +247,6 @@ namespace TestProject.Pages
                 return string.Empty;
             }
         }
-
 
         #endregion
     }
