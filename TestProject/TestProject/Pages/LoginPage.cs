@@ -1,7 +1,10 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +29,26 @@ namespace TestProject.Pages
         /// </summary>
         private const string PasswordFieldId = "password";
 
+        /// <summary>
+        ///     Error button class name.
+        /// </summary>
+        private const string ErrorButtonClassName = "error-button";
+
+        /// <summary>
+        ///     Login container XPath.
+        /// </summary>
+        private const string LoginContainerXPath = "//*[@id=\"root\"]/div";
+
+        /// <summary>
+        ///     Shopping cart logo id.
+        /// </summary>
+        public const string ShoppingCartLogoId = "shopping_cart_container";
+
+        /// <summary>
+        ///     Expected url after login.
+        /// </summary>
+        public const string ExpectedUrlAfterLogin = "https://www.saucedemo.com/inventory.html";
+
         #endregion
 
         #region Fields
@@ -48,13 +71,58 @@ namespace TestProject.Pages
 
         #region Methods
 
+
+        public void Login(string username, string password, WebDriverWait wait, bool errorExpected = false)
+        {
+            if (errorExpected)
+            {
+                TestContext.WriteLine("Login using correct username from .json config.");
+            }
+            else
+            {
+                TestContext.WriteLine("Login using incorrect username/password from .json config.");
+            }
+
+            this.InsertUsername(username);
+            this.InsertPassword(password);
+            this.LoginButtonClick();
+            if (!errorExpected)
+            {
+                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
+            }
+
+        }
+
+        /// <summary>
+        ///     Check if login container is displayed.
+        /// </summary>
+        /// <param name="wait">
+        ///     Web driver wait.
+        /// </param>
+        /// <returns>
+        ///     True if is visible, otherwise false.
+        /// </returns>
+        public static bool IsLoginContainerDisplayed(WebDriverWait wait)
+        {
+            try
+            {
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return false;
+            }
+        }
+
+
         /// <summary>
         ///     Inser username.
         /// </summary>
         /// <param name="username">
         ///     Username as string.
         /// </param>
-        public void InsertUsername(string username)
+        private void InsertUsername(string username)
         {
             this.SendKeysToField(UsernameFieldId, username);
         }
@@ -65,7 +133,7 @@ namespace TestProject.Pages
         /// <param name="password">
         ///     Password as string.
         /// </param>
-        public void InsertPassword(string password)
+        private void InsertPassword(string password)
         {
             this.SendKeysToField(PasswordFieldId, password);
         }
@@ -73,7 +141,7 @@ namespace TestProject.Pages
         /// <summary>
         ///     Login button click.
         /// </summary>
-        public void LoginButtonClick()
+        private void LoginButtonClick()
         {
             try
             {
@@ -82,6 +150,38 @@ namespace TestProject.Pages
             catch(Exception ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+
+        public void CloseErrorButtonClick()
+        {
+            try
+            {
+                driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
+            }
+            catch (Exception ex)
+            {
+                TestContext.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        ///     Check if error is displayed.
+        /// </summary>
+        /// <returns>
+        ///     True if is, otherwise false;
+        /// </returns>
+        public bool ErrorIsDisplayed()
+        {
+            try
+            {
+                var errorContainer = driver.FindElement(By.CssSelector(".error-message-container"));
+                return errorContainer.Text != string.Empty;
+            }
+            catch (Exception ex)
+            {
+                TestContext.WriteLine($"Exception: {ex.Message}");
+                return false;
             }
         }
 
@@ -105,6 +205,29 @@ namespace TestProject.Pages
                 TestContext.WriteLine($"Exception: {ex.Message}");
             }
         }
+
+        /// <summary>
+        ///     Get field value.
+        /// </summary>
+        /// <param name="fieldId">
+        ///     Field id.
+        /// </param>
+        /// <returns>
+        ///     Field value.
+        /// </returns>
+        protected string GetFieldValue(string fieldId)
+        {
+            try
+            {
+                return driver.FindElement(By.Id(fieldId)).Text;
+            }
+            catch (Exception ex)
+            {
+                TestContext.WriteLine($"Exception: {ex.Message}");
+                return string.Empty;
+            }
+        }
+
 
         #endregion
     }
