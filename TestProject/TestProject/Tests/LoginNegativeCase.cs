@@ -65,5 +65,6 @@ public class LoginNegativeCase : TestTemplate
         Assert.IsTrue(loginPage.ErrorIsDisplayed());
         this.loginPage.CloseErrorButtonClick();
         Assert.IsFalse(loginPage.ErrorIsDisplayed());
+        this.loginPage.ClearFields();
     }
 }

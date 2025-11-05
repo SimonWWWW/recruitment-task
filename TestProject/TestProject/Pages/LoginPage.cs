@@ -164,7 +164,7 @@ namespace TestProject.Pages
             {
                 driver.FindElement(By.Id(LoginButtonId)).Click();
             }
-            catch(Exception ex)
+            catch(NotFoundException ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
             }
@@ -179,7 +179,7 @@ namespace TestProject.Pages
             {
                 driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
             }
-            catch (Exception ex)
+            catch (NotFoundException ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
             }
@@ -198,7 +198,7 @@ namespace TestProject.Pages
                 var errorContainer = driver.FindElement(By.CssSelector(".error-message-container"));
                 return errorContainer.Text != string.Empty;
             }
-            catch (Exception ex)
+            catch (NotFoundException ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
                 return false;
@@ -220,7 +220,7 @@ namespace TestProject.Pages
             {
                 driver.FindElement(By.Id(fieldId)).SendKeys(value);
             }
-            catch(Exception ex)
+            catch(NotFoundException ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
             }
@@ -235,16 +235,32 @@ namespace TestProject.Pages
         /// <returns>
         ///     Field value.
         /// </returns>
-        protected string GetFieldValue(string fieldId)
+        public string GetFieldValue(string fieldId)
         {
             try
             {
                 return driver.FindElement(By.Id(fieldId)).Text;
             }
-            catch (Exception ex)
+            catch (NotFoundException ex)
             {
                 TestContext.WriteLine($"Exception: {ex.Message}");
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        ///     Clear password and username fields.
+        /// </summary>
+        public void ClearFields()
+        {
+            try
+            {
+                driver.FindElement(By.Id(UsernameFieldId)).Clear();
+                driver.FindElement(By.Id(PasswordFieldId)).Clear();
+            }
+            catch (NotFoundException ex)
+            {
+                TestContext.WriteLine($"Exception: {ex.Message}");
             }
         }
 

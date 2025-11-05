@@ -13,45 +13,37 @@ public class AddingProduct : TestTemplate
 
     private LoginPage loginPage;
 
+    private InventoryPage inventoryPage;
+
     #endregion
 
     [SetUp]
     public void Setup()
     {
         this.loginPage = new LoginPage(driver);
-    }
-
-    [Test]
-    public void CheckAddingProductAction()
-    {
+        this.inventoryPage = new InventoryPage(driver);
         this.loginPage.Login(
             this.jsonDataDeserialized.CorrectUsername,
             this.jsonDataDeserialized.CorrectPassword,
             this.wait);
+    }
 
-        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url);
 
-        Assert.IsTrue(driver.FindElements(By.ClassName("shopping_cart_badge")).Count == 0, "Shopping cart counter is visible.");
+    [Test, Order(1)]
+    public void CheckDefaultShoppingCartProductCounter()
+    {
+        var currentCounterValue = this.inventoryPage.GetShoppingCartCounter();
+        Assert.AreEqual(0, currentCounterValue, $"Shopping cart counter is visible. Current value: {currentCounterValue}");
+    }
 
-        var productsList = driver.FindElements(By.ClassName("inventory_item"));
+    [Test, Order(2)]
+    public void CheckAddingProductAction()
+    {
+        this.inventoryPage.GetProductList();
+        var randomProduct = this.inventoryPage.GetOneRandomProduct();
 
-        TestContext.WriteLine($"Products list contains {productsList.Count} elements.\n\r" +
-            $"Names:\n\r{string.Join("\n\r", 
-            productsList.Select(p => p.FindElement(By.ClassName("inventory_item_name")).Text).ToList())}");
-
-        Random random = new Random();
-        var chosenProduct = productsList.ElementAt(random.Next(0, productsList.Count));
-        var chosenProductName = chosenProduct.FindElement(By.ClassName("inventory_item_name"));
-
-        TestContext.WriteLine($"Chosen product: {chosenProductName}");
-
-        var addToCartButton = chosenProduct.FindElement(By.TagName("button"));
-        addToCartButton.Click();
-
-        var shoppingCartElement = driver.FindElement(By.Id(LoginPage.ShoppingCartLogoId));
-        var shoppingCartCounter = driver.FindElements(By.ClassName("shopping_cart_badge")).FirstOrDefault();
-        Assert.IsTrue(shoppingCartCounter.Displayed, "Shopping cart counter is not visible.");
-
-        Assert.AreEqual("1", shoppingCartCounter.Text);
+        InventoryPage.AddProduct(randomProduct);
+        var currentCounter = this.inventoryPage.GetShoppingCartCounter();
+        Assert.AreEqual(1, currentCounter, $"Shopping cart counter is not working properly. Current value: {currentCounter}");
     }
 }

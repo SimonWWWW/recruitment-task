@@ -26,19 +26,18 @@ namespace TestProject.Tests
         public IWebDriver driver;
         public WebDriverWait wait;
         public JsonData jsonDataDeserialized;
-        public string sauceDemoUrl;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void BaseSetup()
         {
             this.ReadAllJsonData();
             driver = ChromeDriverConfiguration.CreateDriver();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            driver.Navigate().GoToUrl(sauceDemoUrl);
+            driver.Navigate().GoToUrl(this.jsonDataDeserialized.SauceDemoUrl);
             this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Teardown()
         {
             driver.Dispose();
@@ -49,8 +48,6 @@ namespace TestProject.Tests
             var jsonFilePath = Directory.EnumerateFiles(AppContext.BaseDirectory, "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
             this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
-            this.sauceDemoUrl = this.jsonDataDeserialized.SauceDemoUrl;
-
         }
     }
 }
