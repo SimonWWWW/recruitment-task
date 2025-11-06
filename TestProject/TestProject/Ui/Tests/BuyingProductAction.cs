@@ -8,7 +8,7 @@ namespace TestProject.Ui.Tests;
 public class BuyingProductAction : TestTemplate
 {
     [Test]
-    public void CheckBuyingProductAction()
+    public void ShouldOrderBePossible_WhenUserFollowSteps()
     {
         var loginPage = new LoginPage(this.driver);
         var inventoryPage = new InventoryPage(this.driver);

@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using TestProject.Ui.Pages;
+﻿using TestProject.Ui.Pages;
 
 namespace TestProject.Ui.Tests;
 
@@ -18,41 +13,40 @@ public class LoginNegativeCase : TestTemplate
     [SetUp]
     public void Setup()
     {
-        loginPage = new LoginPage(driver);
+        this.loginPage = new LoginPage(driver);
     }
 
     [Test]
-    public void CheckLoginActionIncorrectPassword()
+    public void ShouldErrorBeDisplayed_WhenPasswordIsIncorrect()
     {
-        loginPage.Login(
-            jsonDataDeserialized.CorrectUsername,
-            jsonDataDeserialized.IncorrectPassword,
+        this.loginPage.Login(
+            this.jsonDataDeserialized.CorrectUsername,
+            this.jsonDataDeserialized.IncorrectPassword,
             true);
 
-        CheckErrorMessage();
+        this.CheckErrorMessage();
     }
 
     [Test]
-    public void CheckLoginActionIncorrectUsername()
+    public void ShouldErrorBeDisplayed_WhenUsernameIsIncorrect()
     {
-        loginPage.Login(
-            jsonDataDeserialized.IncorrectUsername,
-            jsonDataDeserialized.CorrectPassword,
+        this.loginPage.Login(
+            this.jsonDataDeserialized.IncorrectUsername,
+            this.jsonDataDeserialized.CorrectPassword,
             true);
 
-        CheckErrorMessage();
+        this.CheckErrorMessage();
     }
 
     [Test]
-    public void CheckLoginActionIncorrectUsernameAndPassword()
+    public void ShouldErrorBeDisplayed_WhenPasswordAndUsernameIsIncorrect()
     {
-        loginPage.Login(
-            jsonDataDeserialized.IncorrectUsername,
-            jsonDataDeserialized.IncorrectPassword,
+        this.loginPage.Login(
+            this.jsonDataDeserialized.IncorrectUsername,
+            this.jsonDataDeserialized.IncorrectPassword,
             true);
 
-        CheckErrorMessage();
-
+        this.CheckErrorMessage();
     }
 
     /// <summary>
@@ -60,9 +54,11 @@ public class LoginNegativeCase : TestTemplate
     /// </summary>
     private void CheckErrorMessage()
     {
-        Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong url: {driver.Url}");
-        Assert.IsTrue(loginPage.ErrorIsDisplayed());
-        loginPage.CloseErrorButtonClick();
-        Assert.IsFalse(loginPage.ErrorIsDisplayed());
+        Assert.IsFalse(
+            this.driver.Url.EndsWith(LoginPage.ExpectedUrlAfterLogin),
+            $"Wrong url: {driver.Url}");
+        Assert.IsTrue(this.loginPage.ErrorIsDisplayed());
+        this.loginPage.CloseErrorButtonClick();
+        Assert.IsFalse(this.loginPage.ErrorIsDisplayed());
     }
 }

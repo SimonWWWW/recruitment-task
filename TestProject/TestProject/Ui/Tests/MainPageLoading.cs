@@ -8,7 +8,7 @@ namespace TestProject.Ui.Tests;
 public class MainPageLoading : TestTemplate
 {
     [Test]
-    public void CheckTitleAndLogoVisibility()
+    public void ShouldTitleAndLoginContainerBeVisible_WhenPageIsReady()
     {
         var loginPage = new LoginPage(driver);
         Assert.AreEqual(
