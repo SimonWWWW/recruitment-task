@@ -14,36 +14,57 @@ public class BuyingProductAction : TestTemplate
         var inventoryPage = new InventoryPage(this.driver);
         var checkoutPage = new CheckoutPage(this.driver);
         loginPage.Login(
-            jsonDataDeserialized.CorrectUsername,
-            jsonDataDeserialized.CorrectPassword);
+            this.jsonDataDeserialized.CorrectUsername,
+            this.jsonDataDeserialized.CorrectPassword);
 
         var currentCounterValue = inventoryPage.GetShoppingCartCounter();
-        Assert.AreEqual(0, currentCounterValue, $"Shopping cart counter is visible. Current value: {currentCounterValue}");
+        Assert.AreEqual(
+            0,
+            currentCounterValue,
+            $"Shopping cart counter is visible. Current value: {currentCounterValue}");
 
         inventoryPage.AddOneRandomProduct();
         currentCounterValue = inventoryPage.GetShoppingCartCounter();
-        Assert.AreEqual(1, currentCounterValue, $"Shopping cart counter is not working properly. Current value: {currentCounterValue}");
+        Assert.AreEqual(
+            1,
+            currentCounterValue,
+            $"Shopping cart counter is not working properly. " +
+            $"Current value: {currentCounterValue}");
+
         inventoryPage.ClickOnShoppingCart();
-        Assert.AreEqual(InventoryPage.ExpectedCartUrl, driver.Url, $"Wrong cart url: {driver.Url}");
+        Assert.IsTrue(
+            this.driver.Url.EndsWith(InventoryPage.ExpectedCartUrl),
+            $"Wrong cart url: {driver.Url}");
         inventoryPage.GetItemList();
-        Assert.AreEqual(1, inventoryPage.itemList.Count, $"Item list contains {inventoryPage.itemList.Count} elements.");
+        Assert.AreEqual(
+            1,
+            inventoryPage.itemList.Count,
+            $"Item list contains {inventoryPage.itemList.Count} elements.");
         Assert.IsTrue(inventoryPage.CheckCartContent());
 
         inventoryPage.CheckoutButtonClick();
+        Assert.IsTrue(
+            this.driver.Url.EndsWith(CheckoutPage.ExpectedUrlCheckoutFirstStep),
+            $"Wrong checkout url: {driver.Url}");
 
-        Assert.AreEqual(CheckoutPage.ExpectedUrlCheckoutFirstStep, driver.Url, $"Wrong checkout url: {driver.Url}");
-
-        checkoutPage.FillInCustomerFields(jsonDataDeserialized.FirstName, jsonDataDeserialized.LastName, jsonDataDeserialized.PostalCode);
+        checkoutPage.FillInCustomerFields(
+            this.jsonDataDeserialized.FirstName,
+            this.jsonDataDeserialized.LastName,
+            this.jsonDataDeserialized.PostalCode);
 
 
         checkoutPage.ContinueButtonClick();
-
-        Assert.AreEqual(CheckoutPage.ExpectedUrlCheckoutSecondStep, driver.Url, $"Wrong checkout step two url: {driver.Url}");
+        Assert.IsTrue(
+            this.driver.Url.EndsWith(CheckoutPage.ExpectedUrlCheckoutSecondStep),
+            $"Wrong checkout step two url: {driver.Url}");
 
         checkoutPage.FinishButtonClick();
+        Assert.IsTrue(
+            this.driver.Url.EndsWith(CheckoutPage.ExpectedUrlCheckoutCompleteStep),
+            $"Wrong checkout step two url: {driver.Url}");
 
-        Assert.AreEqual(CheckoutPage.ExpectedUrlCheckoutCompleteStep, driver.Url, $"Wrong checkout step two url: {driver.Url}");
-
-        Assert.IsTrue(checkoutPage.CheckIfCheckoutCompleteContainerIsVisible(), "Checkout complete container is not visible.");
+        Assert.IsTrue(
+            checkoutPage.CheckIfCheckoutCompleteContainerIsVisible(),
+            "Checkout complete container is not visible.");
     }
 }

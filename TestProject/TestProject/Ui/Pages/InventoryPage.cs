@@ -1,9 +1,6 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace TestProject.Ui.Pages
 {
@@ -52,7 +49,7 @@ namespace TestProject.Ui.Pages
         /// <summary>
         ///     Expected cart url.
         /// </summary>
-        public const string ExpectedCartUrl = "https://www.saucedemo.com/cart.html";
+        public const string ExpectedCartUrl = "cart.html";
 
         #endregion
 
@@ -78,6 +75,11 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public List<IWebElement> itemList;
 
+        /// <summary>
+        ///     WebDriverWait field.
+        /// </summary>
+        private readonly WebDriverWait wait;
+
         #endregion
 
         #region Constructors
@@ -91,6 +93,7 @@ namespace TestProject.Ui.Pages
         public InventoryPage(IWebDriver driver)
         {
             this.driver = driver;
+            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         #endregion
@@ -102,13 +105,13 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void GetProductList()
         {
-            productList = driver.FindElements(By.ClassName(ProductClassName)).ToList();
+            this.productList = this.driver.FindElements(By.ClassName(ProductClassName)).ToList();
 
-            TestContext.WriteLine($"Product list contains {productList.Count} elements.");
-            if (productList.Count > 0)
+            TestContext.WriteLine($"Product list contains {this.productList.Count} elements.");
+            if (this.productList.Count > 0)
             {
                 TestContext.WriteLine($"Names:\n\r{string.Join("\n\r",
-                    productList.Select(p => p.FindElement(By.ClassName(ProductNameClassName)).Text).ToList())}");
+                    this.productList.Select(p => p.FindElement(By.ClassName(ProductNameClassName)).Text).ToList())}");
             }
         }
         
@@ -121,10 +124,10 @@ namespace TestProject.Ui.Pages
         public IWebElement GetOneRandomProduct()
         {
             Random random = new Random();
-            var chosenProduct = productList.ElementAt(random.Next(0, productList.Count));
-            chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName)).Text;
+            var chosenProduct = this.productList.ElementAt(random.Next(0, this.productList.Count));
+            this.chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName)).Text;
 
-            TestContext.WriteLine($"Chosen product: {chosenProductName}");
+            TestContext.WriteLine($"Chosen product: {this.chosenProductName}");
 
             return chosenProduct;
         }
@@ -139,9 +142,11 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                return int.Parse(driver.FindElement(By.ClassName(ShoppingCartProductCounterClassName)).Text);
+                var shoppingCartCounterElement = this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(By.ClassName(ShoppingCartProductCounterClassName)));
+                return int.Parse(shoppingCartCounterElement.Text);
             }
-            catch (NotFoundException) 
+            catch (WebDriverTimeoutException) 
             {
                 return 0;
             }
@@ -153,16 +158,17 @@ namespace TestProject.Ui.Pages
         /// <param name="productToAdd">
         ///     Product to add.
         /// </param>
-        public static void AddProduct(IWebElement productToAdd)
+        public void AddProduct(IWebElement productToAdd)
         {
             try
             {
-                var addToCartButton = productToAdd.FindElement(By.TagName(ButtonTagName));
+                var addToCartButton = this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(productToAdd.FindElement(By.TagName(ButtonTagName))));
                 addToCartButton.Click();
             }
-            catch (NotFoundException ex)
+            catch (WebDriverTimeoutException ex)
             {
-                TestContext.WriteLine($"Exception message: {ex.Message}");
+                Assert.Fail($"Exception: {ex.Message}");
             }
 
         }
@@ -172,8 +178,8 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void AddOneRandomProduct()
         {
-            GetProductList();
-            AddProduct(GetOneRandomProduct());
+            this.GetProductList();
+            this.AddProduct(this.GetOneRandomProduct());
         }
 
         /// <summary>

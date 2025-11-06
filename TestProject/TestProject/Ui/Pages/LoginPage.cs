@@ -44,7 +44,7 @@ namespace TestProject.Ui.Pages
         /// <summary>
         ///     Expected url after login.
         /// </summary>
-        public const string ExpectedUrlAfterLogin = "https://www.saucedemo.com/inventory.html";
+        public const string ExpectedUrlAfterLogin = "inventory.html";
 
         /// <summary>
         ///     Error message container css selector.
@@ -111,13 +111,13 @@ namespace TestProject.Ui.Pages
                 TestContext.WriteLine("Login using incorrect username/password from .json config.");
             }
 
-            InsertUsername(username);
-            InsertPassword(password);
-            LoginButtonClick();
+            this.InsertUsername(username);
+            this.InsertPassword(password);
+            this.LoginButtonClick();
 
             if (!errorExpected)
             {
-                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
+                this.wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
             }
         }
 
@@ -153,7 +153,7 @@ namespace TestProject.Ui.Pages
         /// </param>
         private void InsertUsername(string username)
         {
-            SendKeysToField(UsernameFieldId, username);
+            this.SendKeysToField(UsernameFieldId, username);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace TestProject.Ui.Pages
         /// </param>
         private void InsertPassword(string password)
         {
-            SendKeysToField(PasswordFieldId, password);
+            this.SendKeysToField(PasswordFieldId, password);
         }
 
         /// <summary>
@@ -174,11 +174,12 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                this.driver.FindElement(By.Id(LoginButtonId)).Click();
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(By.Id(LoginButtonId))).Click();
             }
-            catch(NotFoundException ex)
+            catch (WebDriverTimeoutException ex)
             {
-                TestContext.WriteLine($"Exception: {ex.Message}");
+                Assert.Fail($"Exception: {ex.Message}");
             }
         }
 
@@ -189,11 +190,12 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                this.driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(By.ClassName(ErrorButtonClassName))).Click();
             }
-            catch (NotFoundException ex)
+            catch (WebDriverTimeoutException ex)
             {
-                TestContext.WriteLine($"Exception: {ex.Message}");
+                Assert.Fail($"Exception: {ex.Message}");
             }
         }
 
@@ -207,12 +209,12 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                var errorContainer = driver.FindElement(By.CssSelector(ErrorMessageContainerCssSelector));
+                var errorContainer = this.wait.Until(
+                    ExpectedConditions.ElementIsVisible(By.CssSelector(ErrorMessageContainerCssSelector)));
                 return errorContainer.Text != string.Empty;
             }
-            catch (NotFoundException ex)
+            catch (WebDriverTimeoutException)
             {
-                TestContext.WriteLine($"Exception: {ex.Message}");
                 return false;
             }
         }
@@ -230,33 +232,13 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                this.driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(this.driver.FindElement(By.Id(fieldId))))
+                    .SendKeys(value);
             }
-            catch(NotFoundException ex)
+            catch (WebDriverTimeoutException ex)
             {
-                TestContext.WriteLine($"Exception: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        ///     Get field value.
-        /// </summary>
-        /// <param name="fieldId">
-        ///     Field id.
-        /// </param>
-        /// <returns>
-        ///     Field value.
-        /// </returns>
-        public string GetFieldValue(string fieldId)
-        {
-            try
-            {
-                return this.driver.FindElement(By.Id(fieldId)).Text;
-            }
-            catch (NotFoundException ex)
-            {
-                TestContext.WriteLine($"Exception: {ex.Message}");
-                return string.Empty;
+                Assert.Fail($"Exception: {ex.Message}");
             }
         }
 

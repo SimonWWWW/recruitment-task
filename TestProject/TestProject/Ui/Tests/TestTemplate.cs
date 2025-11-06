@@ -10,15 +10,16 @@ namespace TestProject.Ui.Tests
     /// </summary>
     public class TestTemplate
     {
+        #region Constants
+
         /// <summary>
         ///     Login container XPath.
         /// </summary>
         private const string LoginContainerXPath = "//*[@id=\"root\"]/div";
 
-        /// <summary>
-        ///     Expected title.
-        /// </summary>
-        public const string ExpectedTitle = "Swag Labs";
+        #endregion
+
+        #region Fields
 
         /// <summary>
         ///     Driver.
@@ -26,14 +27,11 @@ namespace TestProject.Ui.Tests
         public IWebDriver driver;
 
         /// <summary>
-        ///     WebDriverWait.
-        /// </summary>
-        //public WebDriverWait wait;
-
-        /// <summary>
         ///     Json data deserialized.
         /// </summary>
         public JsonData jsonDataDeserialized;
+
+        #endregion
 
         [SetUp]
         public void BaseSetup()

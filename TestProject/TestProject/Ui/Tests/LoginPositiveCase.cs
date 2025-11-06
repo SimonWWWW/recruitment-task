@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using TestProject.Ui.Pages;
+﻿using TestProject.Ui.Pages;
 
 namespace TestProject.Ui.Tests;
 
+/// <summary>
+///     Login positive case class.
+/// </summary>
 public class LoginPositiveCase : TestTemplate
 {
     [Test]
@@ -13,9 +12,9 @@ public class LoginPositiveCase : TestTemplate
     {
         var loginPage = new LoginPage(driver);
         loginPage.Login(
-            jsonDataDeserialized.CorrectUsername,
-            jsonDataDeserialized.CorrectPassword);
+            this.jsonDataDeserialized.CorrectUsername,
+            this.jsonDataDeserialized.CorrectPassword);
 
-        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong login page url: {driver.Url}");
+        Assert.IsTrue(this.driver.Url.EndsWith(LoginPage.ExpectedUrlAfterLogin), $"Wrong login page url: {this.driver.Url}");
     }
 }

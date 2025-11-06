@@ -12,8 +12,8 @@ public class MainPageLoading : TestTemplate
     {
         var loginPage = new LoginPage(driver);
         Assert.AreEqual(
-            ExpectedTitle,
-            driver.Title,
+            "Swag Labs",
+            this.driver.Title,
             "Title is not as expected.");
 
         Assert.IsTrue(

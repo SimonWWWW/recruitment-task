@@ -4,6 +4,9 @@ using SeleniumExtras.WaitHelpers;
 
 namespace TestProject.Ui.Pages
 {
+    /// <summary>
+    ///     Checkout page class.
+    /// </summary>
     public class CheckoutPage
     {
         #region Constants
@@ -41,17 +44,17 @@ namespace TestProject.Ui.Pages
         /// <summary>
         ///     Expected url checkout complete step.
         /// </summary>
-        public const string ExpectedUrlCheckoutCompleteStep = "https://www.saucedemo.com/checkout-complete.html";
+        public const string ExpectedUrlCheckoutCompleteStep = "checkout-complete.html";
 
         /// <summary>
         ///     Expected url checkout first step.
         /// </summary>
-        public const string ExpectedUrlCheckoutFirstStep = "https://www.saucedemo.com/checkout-step-one.html";
+        public const string ExpectedUrlCheckoutFirstStep = "checkout-step-one.html";
 
         /// <summary>
         ///     Expected url checkout second step.
         /// </summary>
-        public const string ExpectedUrlCheckoutSecondStep = "https://www.saucedemo.com/checkout-step-two.html";
+        public const string ExpectedUrlCheckoutSecondStep = "checkout-step-two.html";
 
         #endregion
 
@@ -80,7 +83,7 @@ namespace TestProject.Ui.Pages
         public CheckoutPage(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         #endregion
@@ -95,7 +98,7 @@ namespace TestProject.Ui.Pages
         /// </param>
         private void InsertFirstName(string firstName)
         {
-            SendKeysToField(FirstNameId, firstName);
+            this.SendKeysToField(FirstNameId, firstName);
         }
 
         /// <summary>
@@ -106,7 +109,7 @@ namespace TestProject.Ui.Pages
         /// </param>
         private void InsertLastName(string lastName)
         {
-            SendKeysToField(LastNameId, lastName);
+            this.SendKeysToField(LastNameId, lastName);
         }
 
         /// <summary>
@@ -117,7 +120,7 @@ namespace TestProject.Ui.Pages
         /// </param>
         private void InsertPostalCode(string postalCode)
         {
-            SendKeysToField(PostalCodeId, postalCode);
+            this.SendKeysToField(PostalCodeId, postalCode);
         }
 
         /// <summary>
@@ -133,11 +136,13 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(this.driver.FindElement(By.Id(fieldId))))
+                    .SendKeys(value);
             }
-            catch (NotFoundException ex)
+            catch (WebDriverTimeoutException ex)
             {
-                TestContext.WriteLine($"Exception: {ex.Message}");
+                Assert.Fail($"Exception: {ex.Message}");
             }
         }
 
@@ -155,9 +160,9 @@ namespace TestProject.Ui.Pages
         /// </param>
         public void FillInCustomerFields(string firstName, string lastName, string postalCode)
         {
-            InsertFirstName(firstName);
-            InsertLastName(lastName);
-            InsertPostalCode(postalCode);
+            this.InsertFirstName(firstName);
+            this.InsertLastName(lastName);
+            this.InsertPostalCode(postalCode);
         }
 
         /// <summary>
@@ -165,7 +170,15 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void ContinueButtonClick()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(ContinueButtonId))).Click();
+            try
+            {
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(By.Id(ContinueButtonId))).Click();
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                Assert.Fail($"Exception: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -173,7 +186,15 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void FinishButtonClick()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(FinishButtonId))).Click();
+            try
+            {
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(By.Id(FinishButtonId))).Click();
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                Assert.Fail($"Exception: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -184,7 +205,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(CheckoutCompleteContainerId)));
+                this.wait.Until(ExpectedConditions.ElementIsVisible(By.Id(CheckoutCompleteContainerId)));
                 return true;
             }
             catch (WebDriverTimeoutException)
