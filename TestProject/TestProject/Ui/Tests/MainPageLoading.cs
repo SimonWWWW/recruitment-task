@@ -2,6 +2,9 @@
 
 namespace TestProject.Ui.Tests;
 
+/// <summary>
+///     Main page loading class.
+/// </summary>
 public class MainPageLoading : TestTemplate
 {
     [Test]

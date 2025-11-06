@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using TestProject.Ui.Pages;
+﻿using TestProject.Ui.Pages;
 
 namespace TestProject.Ui.Tests;
 
+/// <summary>
+///     Buying product action class.
+/// </summary>
 public class BuyingProductAction : TestTemplate
 {
     [Test]

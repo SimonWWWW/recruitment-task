@@ -5,6 +5,9 @@ using SeleniumExtras.WaitHelpers;
 
 namespace TestProject.Ui.Tests
 {
+    /// <summary>
+    ///     Test template class.
+    /// </summary>
     public class TestTemplate
     {
         /// <summary>
@@ -38,7 +41,10 @@ namespace TestProject.Ui.Tests
             this.ReadAllJsonData();
             this.driver = ChromeDriverConfiguration.CreateDriver();
             this.driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
-            new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+            new WebDriverWait(
+                driver,
+                TimeSpan.FromSeconds(15)).Until(
+                ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
         [TearDown]
@@ -52,7 +58,8 @@ namespace TestProject.Ui.Tests
         /// </summary>
         private void ReadAllJsonData()
         {
-            var jsonFilePath = Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "Ui"), "inputs.json").First();
+            var jsonFilePath = Directory.EnumerateFiles(
+                Path.Combine(AppContext.BaseDirectory, "Ui"), "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
             this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
         }

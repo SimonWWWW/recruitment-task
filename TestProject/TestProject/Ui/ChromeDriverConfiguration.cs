@@ -1,16 +1,22 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestProject.Ui
 {
+    /// <summary>
+    ///     Chrome driver configuration class.
+    /// </summary>
     public static class ChromeDriverConfiguration
     {
+        /// <summary>
+        ///     Create driver method.
+        /// </summary>
+        /// <param name="isHeadless">
+        ///     If is headless option needed set true.
+        /// </param>
+        /// <returns>
+        ///     IWebDriver.
+        /// </returns>
         public static IWebDriver CreateDriver(bool isHeadless = false)
         {
             IWebDriver driver;

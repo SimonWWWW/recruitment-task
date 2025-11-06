@@ -131,7 +131,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+                this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
                 return true;
             }
             catch (NoSuchElementException)
@@ -174,7 +174,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                driver.FindElement(By.Id(LoginButtonId)).Click();
+                this.driver.FindElement(By.Id(LoginButtonId)).Click();
             }
             catch(NotFoundException ex)
             {
@@ -189,7 +189,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
+                this.driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
             }
             catch (NotFoundException ex)
             {
@@ -230,7 +230,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                this.driver.FindElement(By.Id(fieldId)).SendKeys(value);
             }
             catch(NotFoundException ex)
             {
@@ -251,7 +251,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                return driver.FindElement(By.Id(fieldId)).Text;
+                return this.driver.FindElement(By.Id(fieldId)).Text;
             }
             catch (NotFoundException ex)
             {
