@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestProject.Tests
 {
@@ -23,8 +17,19 @@ namespace TestProject.Tests
         /// </summary>
         public const string ExpectedTitle = "Swag Labs";
 
+        /// <summary>
+        ///     Driver.
+        /// </summary>
         public IWebDriver driver;
+
+        /// <summary>
+        ///     WebDriverWait.
+        /// </summary>
         public WebDriverWait wait;
+
+        /// <summary>
+        ///     Json data deserialized.
+        /// </summary>
         public JsonData jsonDataDeserialized;
 
         [OneTimeSetUp]
@@ -43,6 +48,9 @@ namespace TestProject.Tests
             driver.Dispose();
         }
 
+        /// <summary>
+        ///     Read all json file data.
+        /// </summary>
         private void ReadAllJsonData()
         {
             var jsonFilePath = Directory.EnumerateFiles(AppContext.BaseDirectory, "inputs.json").First();

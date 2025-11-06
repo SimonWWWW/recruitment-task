@@ -9,41 +9,24 @@ namespace TestProject;
 
 public class AddingProduct : TestTemplate
 {
-    #region Fields
-
-    private LoginPage loginPage;
-
-    private InventoryPage inventoryPage;
-
-    #endregion
-
-    [SetUp]
-    public void Setup()
+    [Test]
+    public void CheckAddingProductAction()
     {
-        this.loginPage = new LoginPage(driver);
-        this.inventoryPage = new InventoryPage(driver);
-        this.loginPage.Login(
+        var loginPage = new LoginPage(driver);
+        var inventoryPage = new InventoryPage(driver);
+        loginPage.Login(
             this.jsonDataDeserialized.CorrectUsername,
             this.jsonDataDeserialized.CorrectPassword,
             this.wait);
-    }
 
-
-    [Test, Order(1)]
-    public void CheckDefaultShoppingCartProductCounter()
-    {
-        var currentCounterValue = this.inventoryPage.GetShoppingCartCounter();
+        var currentCounterValue = inventoryPage.GetShoppingCartCounter();
         Assert.AreEqual(0, currentCounterValue, $"Shopping cart counter is visible. Current value: {currentCounterValue}");
-    }
 
-    [Test, Order(2)]
-    public void CheckAddingProductAction()
-    {
-        this.inventoryPage.GetProductList();
-        var randomProduct = this.inventoryPage.GetOneRandomProduct();
+        inventoryPage.GetProductList();
+        var randomProduct = inventoryPage.GetOneRandomProduct();
 
         InventoryPage.AddProduct(randomProduct);
-        var currentCounter = this.inventoryPage.GetShoppingCartCounter();
-        Assert.AreEqual(1, currentCounter, $"Shopping cart counter is not working properly. Current value: {currentCounter}");
+        currentCounterValue = inventoryPage.GetShoppingCartCounter();
+        Assert.AreEqual(1, currentCounterValue, $"Shopping cart counter is not working properly. Current value: {currentCounterValue}");
     }
 }

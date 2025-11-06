@@ -1,18 +1,9 @@
-﻿using Newtonsoft.Json;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using TestProject.Pages;
+﻿using TestProject.Pages;
 using TestProject.Tests;
 namespace TestProject;
 
 public class MainPageLoading : TestTemplate
 {
-    #region Constants
-
-
-    #endregion
-
     [Test]
     public void CheckTitle()
     {
@@ -23,7 +14,7 @@ public class MainPageLoading : TestTemplate
     }
 
     [Test]
-    public void CheckLogoAndLoginInputs()
+    public void CheckLogoAndLoginInputsVisibility()
     {
         Assert.IsTrue(
             LoginPage.IsLoginContainerDisplayed(this.wait),

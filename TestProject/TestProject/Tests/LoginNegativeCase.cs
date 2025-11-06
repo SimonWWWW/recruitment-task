@@ -59,6 +59,9 @@ public class LoginNegativeCase : TestTemplate
 
     }
 
+    /// <summary>
+    ///     Check if error message is displayed.
+    /// </summary>
     private void CheckErrorMessage()
     {
         Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url);
