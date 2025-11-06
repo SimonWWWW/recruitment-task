@@ -2,18 +2,18 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using TestProject.Pages;
+using TestProject.Ui.Pages;
 
-namespace TestProject.UiTests;
+namespace TestProject.Ui.Tests;
 
 public class BuyingProductAction : TestTemplate
 {
     [Test]
     public void CheckBuyingProductAction()
     {
-        var loginPage = new LoginPage(driver);
-        var inventoryPage = new InventoryPage(driver);
-        var checkoutPage = new CheckoutPage(driver);
+        var loginPage = new LoginPage(this.driver);
+        var inventoryPage = new InventoryPage(this.driver);
+        var checkoutPage = new CheckoutPage(this.driver);
         loginPage.Login(
             jsonDataDeserialized.CorrectUsername,
             jsonDataDeserialized.CorrectPassword);

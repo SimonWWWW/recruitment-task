@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace TestProject.Pages
+namespace TestProject.Ui.Pages
 {
     public class CheckoutPage
     {
@@ -80,7 +80,7 @@ namespace TestProject.Pages
         public CheckoutPage(IWebDriver driver)
         {
             this.driver = driver;
-            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         #endregion
@@ -95,7 +95,7 @@ namespace TestProject.Pages
         /// </param>
         private void InsertFirstName(string firstName)
         {
-            this.SendKeysToField(FirstNameId, firstName);
+            SendKeysToField(FirstNameId, firstName);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace TestProject.Pages
         /// </param>
         private void InsertLastName(string lastName)
         {
-            this.SendKeysToField(LastNameId, lastName);
+            SendKeysToField(LastNameId, lastName);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace TestProject.Pages
         /// </param>
         private void InsertPostalCode(string postalCode)
         {
-            this.SendKeysToField(PostalCodeId, postalCode);
+            SendKeysToField(PostalCodeId, postalCode);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                driver.FindElement(By.Id(fieldId)).SendKeys(value);
             }
             catch (NotFoundException ex)
             {
@@ -155,9 +155,9 @@ namespace TestProject.Pages
         /// </param>
         public void FillInCustomerFields(string firstName, string lastName, string postalCode)
         {
-            this.InsertFirstName(firstName);
-            this.InsertLastName(lastName);
-            this.InsertPostalCode(postalCode);
+            InsertFirstName(firstName);
+            InsertLastName(lastName);
+            InsertPostalCode(postalCode);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace TestProject.Pages
         /// </summary>
         public void ContinueButtonClick()
         {
-            this.wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(ContinueButtonId))).Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(ContinueButtonId))).Click();
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace TestProject.Pages
         /// </summary>
         public void FinishButtonClick()
         {
-            this.wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(FinishButtonId))).Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(FinishButtonId))).Click();
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.wait.Until(ExpectedConditions.ElementIsVisible(By.Id(CheckoutCompleteContainerId)));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(CheckoutCompleteContainerId)));
                 return true;
             }
             catch (WebDriverTimeoutException)

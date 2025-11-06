@@ -3,9 +3,9 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using TestProject.Pages;
+using TestProject.Ui.Pages;
 
-namespace TestProject.UiTests;
+namespace TestProject.Ui.Tests;
 
 public class LoginNegativeCase : TestTemplate
 {

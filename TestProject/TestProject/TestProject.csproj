@@ -25,13 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="inputs.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Ui\inputs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tests\" />
   </ItemGroup>
 
 </Project>

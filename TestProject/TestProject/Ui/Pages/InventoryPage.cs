@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestProject.Pages
+namespace TestProject.Ui.Pages
 {
     /// <summary>
     ///     Inventory page class.
@@ -102,13 +102,13 @@ namespace TestProject.Pages
         /// </summary>
         public void GetProductList()
         {
-            this.productList = driver.FindElements(By.ClassName(ProductClassName)).ToList();
+            productList = driver.FindElements(By.ClassName(ProductClassName)).ToList();
 
-            TestContext.WriteLine($"Product list contains {this.productList.Count} elements.");
-            if (this.productList.Count > 0)
+            TestContext.WriteLine($"Product list contains {productList.Count} elements.");
+            if (productList.Count > 0)
             {
                 TestContext.WriteLine($"Names:\n\r{string.Join("\n\r",
-                    this.productList.Select(p => p.FindElement(By.ClassName(ProductNameClassName)).Text).ToList())}");
+                    productList.Select(p => p.FindElement(By.ClassName(ProductNameClassName)).Text).ToList())}");
             }
         }
         
@@ -121,8 +121,8 @@ namespace TestProject.Pages
         public IWebElement GetOneRandomProduct()
         {
             Random random = new Random();
-            var chosenProduct = this.productList.ElementAt(random.Next(0, this.productList.Count));
-            this.chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName)).Text;
+            var chosenProduct = productList.ElementAt(random.Next(0, productList.Count));
+            chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName)).Text;
 
             TestContext.WriteLine($"Chosen product: {chosenProductName}");
 
@@ -139,7 +139,7 @@ namespace TestProject.Pages
         {
             try
             {
-                return Int32.Parse(this.driver.FindElement(By.ClassName(ShoppingCartProductCounterClassName)).Text);
+                return int.Parse(driver.FindElement(By.ClassName(ShoppingCartProductCounterClassName)).Text);
             }
             catch (NotFoundException) 
             {
@@ -172,8 +172,8 @@ namespace TestProject.Pages
         /// </summary>
         public void AddOneRandomProduct()
         {
-            this.GetProductList();
-            AddProduct(this.GetOneRandomProduct());
+            GetProductList();
+            AddProduct(GetOneRandomProduct());
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace TestProject.Pages
         {
             try
             {
-                var shoppingCartElement = this.driver.FindElement(By.ClassName(ShoppingCartLinkClassName));
+                var shoppingCartElement = driver.FindElement(By.ClassName(ShoppingCartLinkClassName));
                 shoppingCartElement.Click();
             }
             catch (NotFoundException ex)
@@ -197,7 +197,7 @@ namespace TestProject.Pages
         /// </summary>
         public void GetItemList()
         {
-            this.itemList = this.driver.FindElements(By.ClassName(CartItemClassName)).ToList();
+            itemList = driver.FindElements(By.ClassName(CartItemClassName)).ToList();
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace TestProject.Pages
         /// </returns>
         public bool CheckCartContent()
         {
-            var productFromCart = this.itemList.First();
+            var productFromCart = itemList.First();
 
             var productFromCartName = productFromCart.FindElement(By.ClassName(ProductNameClassName)).Text;
 
@@ -220,7 +220,7 @@ namespace TestProject.Pages
         /// </summary>
         public void CheckoutButtonClick()
         {
-            this.driver.FindElement(By.Id(CheckoutButtonId)).Click();
+            driver.FindElement(By.Id(CheckoutButtonId)).Click();
         }
 
         #endregion

@@ -1,5 +1,6 @@
-﻿using TestProject.Pages;
-namespace TestProject.UiTests;
+﻿using TestProject.Ui.Pages;
+
+namespace TestProject.Ui.Tests;
 
 public class MainPageLoading : TestTemplate
 {

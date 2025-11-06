@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace TestProject.Pages
+namespace TestProject.Ui.Pages
 {
     /// <summary>
     ///     Login page class.
@@ -111,13 +111,13 @@ namespace TestProject.Pages
                 TestContext.WriteLine("Login using incorrect username/password from .json config.");
             }
 
-            this.InsertUsername(username);
-            this.InsertPassword(password);
-            this.LoginButtonClick();
+            InsertUsername(username);
+            InsertPassword(password);
+            LoginButtonClick();
 
             if (!errorExpected)
             {
-                this.wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
             }
         }
 
@@ -131,7 +131,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
                 return true;
             }
             catch (NoSuchElementException)
@@ -153,7 +153,7 @@ namespace TestProject.Pages
         /// </param>
         private void InsertUsername(string username)
         {
-            this.SendKeysToField(UsernameFieldId, username);
+            SendKeysToField(UsernameFieldId, username);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace TestProject.Pages
         /// </param>
         private void InsertPassword(string password)
         {
-            this.SendKeysToField(PasswordFieldId, password);
+            SendKeysToField(PasswordFieldId, password);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.driver.FindElement(By.Id(LoginButtonId)).Click();
+                driver.FindElement(By.Id(LoginButtonId)).Click();
             }
             catch(NotFoundException ex)
             {
@@ -189,7 +189,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
+                driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
             }
             catch (NotFoundException ex)
             {
@@ -230,7 +230,7 @@ namespace TestProject.Pages
         {
             try
             {
-                this.driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                driver.FindElement(By.Id(fieldId)).SendKeys(value);
             }
             catch(NotFoundException ex)
             {
@@ -251,7 +251,7 @@ namespace TestProject.Pages
         {
             try
             {
-                return this.driver.FindElement(By.Id(fieldId)).Text;
+                return driver.FindElement(By.Id(fieldId)).Text;
             }
             catch (NotFoundException ex)
             {

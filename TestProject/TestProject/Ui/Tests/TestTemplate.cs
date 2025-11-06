@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace TestProject.UiTests
+namespace TestProject.Ui.Tests
 {
     public class TestTemplate
     {
@@ -35,17 +35,16 @@ namespace TestProject.UiTests
         [SetUp]
         public void BaseSetup()
         {
-            ReadAllJsonData();
-            driver = ChromeDriverConfiguration.CreateDriver();
-            //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
+            this.ReadAllJsonData();
+            this.driver = ChromeDriverConfiguration.CreateDriver();
+            this.driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
             new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
         [TearDown]
         public void Teardown()
         {
-            driver.Dispose();
+            this.driver.Dispose();
         }
 
         /// <summary>
@@ -53,9 +52,9 @@ namespace TestProject.UiTests
         /// </summary>
         private void ReadAllJsonData()
         {
-            var jsonFilePath = Directory.EnumerateFiles(AppContext.BaseDirectory, "inputs.json").First();
+            var jsonFilePath = Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "Ui"), "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
-            jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
+            this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
         }
     }
 }
