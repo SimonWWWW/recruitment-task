@@ -1,16 +1,15 @@
 ﻿using TestProject.Pages;
-using TestProject.Tests;
-namespace TestProject;
+namespace TestProject.UiTests;
 
 public class MainPageLoading : TestTemplate
 {
     [Test]
     public void CheckTitleAndLogoVisibility()
     {
-        var loginPage = new LoginPage(this.driver);
+        var loginPage = new LoginPage(driver);
         Assert.AreEqual(
             ExpectedTitle,
-            this.driver.Title,
+            driver.Title,
             "Title is not as expected.");
 
         Assert.IsTrue(

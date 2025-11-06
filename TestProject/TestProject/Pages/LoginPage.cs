@@ -134,6 +134,10 @@ namespace TestProject.Pages
                 this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
                 return true;
             }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
             catch (WebDriverTimeoutException)
             {
                 return false;

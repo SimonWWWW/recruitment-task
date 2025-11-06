@@ -3,9 +3,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using TestProject.Pages;
-using TestProject.Tests;
 
-namespace TestProject;
+namespace TestProject.UiTests;
 
 public class LoginPositiveCase : TestTemplate
 {
@@ -14,9 +13,9 @@ public class LoginPositiveCase : TestTemplate
     {
         var loginPage = new LoginPage(driver);
         loginPage.Login(
-            this.jsonDataDeserialized.CorrectUsername,
-            this.jsonDataDeserialized.CorrectPassword);
+            jsonDataDeserialized.CorrectUsername,
+            jsonDataDeserialized.CorrectPassword);
 
-        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong cart url: {driver.Url}");
+        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong login page url: {driver.Url}");
     }
 }

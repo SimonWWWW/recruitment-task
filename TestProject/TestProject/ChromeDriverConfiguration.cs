@@ -20,6 +20,9 @@ namespace TestProject
             {
                 chromeOptions.AddArgument("--headless=new");
             }
+
+            // workaround for pop-up about password leak
+            chromeOptions.AddUserProfilePreference("profile.password_manager_leak_detection", false);
             driver = new ChromeDriver(chromeOptions);
             return driver;
         }

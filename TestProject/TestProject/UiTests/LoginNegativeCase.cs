@@ -4,9 +4,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using TestProject.Pages;
-using TestProject.Tests;
 
-namespace TestProject;
+namespace TestProject.UiTests;
 
 public class LoginNegativeCase : TestTemplate
 {
@@ -19,40 +18,40 @@ public class LoginNegativeCase : TestTemplate
     [SetUp]
     public void Setup()
     {
-        this.loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver);
     }
 
     [Test]
     public void CheckLoginActionIncorrectPassword()
     {
-        this.loginPage.Login(
-            this.jsonDataDeserialized.CorrectUsername,
-            this.jsonDataDeserialized.IncorrectPassword,
+        loginPage.Login(
+            jsonDataDeserialized.CorrectUsername,
+            jsonDataDeserialized.IncorrectPassword,
             true);
 
-        this.CheckErrorMessage();
+        CheckErrorMessage();
     }
 
     [Test]
     public void CheckLoginActionIncorrectUsername()
     {
-        this.loginPage.Login(
-            this.jsonDataDeserialized.IncorrectUsername,
-            this.jsonDataDeserialized.CorrectPassword,
+        loginPage.Login(
+            jsonDataDeserialized.IncorrectUsername,
+            jsonDataDeserialized.CorrectPassword,
             true);
 
-        this.CheckErrorMessage();
+        CheckErrorMessage();
     }
 
     [Test]
     public void CheckLoginActionIncorrectUsernameAndPassword()
     {
-        this.loginPage.Login(
-            this.jsonDataDeserialized.IncorrectUsername,
-            this.jsonDataDeserialized.IncorrectPassword,
+        loginPage.Login(
+            jsonDataDeserialized.IncorrectUsername,
+            jsonDataDeserialized.IncorrectPassword,
             true);
 
-        this.CheckErrorMessage();
+        CheckErrorMessage();
 
     }
 
@@ -61,9 +60,9 @@ public class LoginNegativeCase : TestTemplate
     /// </summary>
     private void CheckErrorMessage()
     {
-        Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong cart url: {driver.Url}");
+        Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong url: {driver.Url}");
         Assert.IsTrue(loginPage.ErrorIsDisplayed());
-        this.loginPage.CloseErrorButtonClick();
+        loginPage.CloseErrorButtonClick();
         Assert.IsFalse(loginPage.ErrorIsDisplayed());
     }
 }

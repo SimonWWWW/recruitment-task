@@ -4,5 +4,8 @@
   "sauceDemoUrl": "https://www.saucedemo.com",
   "incorrectUsername": "standardddd_user",
   "incorrectPassword": "secretttt_sauce",
+  "firstName": "Adam",
+  "lastName": "Adamowski",
+  "postalCode": "12-345"
   
 }

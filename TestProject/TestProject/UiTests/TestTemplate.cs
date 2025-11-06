@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace TestProject.Tests
+namespace TestProject.UiTests
 {
     public class TestTemplate
     {
@@ -35,10 +35,10 @@ namespace TestProject.Tests
         [SetUp]
         public void BaseSetup()
         {
-            this.ReadAllJsonData();
+            ReadAllJsonData();
             driver = ChromeDriverConfiguration.CreateDriver();
             //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            driver.Navigate().GoToUrl(this.jsonDataDeserialized.SauceDemoUrl);
+            driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
             new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
@@ -55,7 +55,7 @@ namespace TestProject.Tests
         {
             var jsonFilePath = Directory.EnumerateFiles(AppContext.BaseDirectory, "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
-            this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
+            jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
         }
     }
 }

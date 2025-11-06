@@ -17,5 +17,11 @@ namespace TestProject
         public string IncorrectUsername { get; set; }
 
         public string IncorrectPassword { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string PostalCode { get; set; }
     }
 }
