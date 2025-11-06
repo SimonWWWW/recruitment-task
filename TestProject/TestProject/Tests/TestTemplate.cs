@@ -25,7 +25,7 @@ namespace TestProject.Tests
         /// <summary>
         ///     WebDriverWait.
         /// </summary>
-        public WebDriverWait wait;
+        //public WebDriverWait wait;
 
         /// <summary>
         ///     Json data deserialized.
@@ -37,9 +37,9 @@ namespace TestProject.Tests
         {
             this.ReadAllJsonData();
             driver = ChromeDriverConfiguration.CreateDriver();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
             driver.Navigate().GoToUrl(this.jsonDataDeserialized.SauceDemoUrl);
-            this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+            new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
         [TearDown]

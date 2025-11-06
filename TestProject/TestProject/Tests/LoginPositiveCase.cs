@@ -15,9 +15,8 @@ public class LoginPositiveCase : TestTemplate
         var loginPage = new LoginPage(driver);
         loginPage.Login(
             this.jsonDataDeserialized.CorrectUsername,
-            this.jsonDataDeserialized.CorrectPassword,
-            this.wait);
+            this.jsonDataDeserialized.CorrectPassword);
 
-        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url);
+        Assert.AreEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong cart url: {driver.Url}");
     }
 }

@@ -46,6 +46,11 @@ namespace TestProject.Pages
         /// </summary>
         public const string ExpectedUrlAfterLogin = "https://www.saucedemo.com/inventory.html";
 
+        /// <summary>
+        ///     Error message container css selector.
+        /// </summary>
+        private const string ErrorMessageContainerCssSelector = ".error-message-container";
+
         #endregion
 
         #region Fields
@@ -54,6 +59,11 @@ namespace TestProject.Pages
         ///     IWebDriver field.
         /// </summary>
         private readonly IWebDriver driver;
+
+        /// <summary>
+        ///     WebDriverWait field.
+        /// </summary>
+        private readonly WebDriverWait wait;
 
         #endregion
 
@@ -68,6 +78,7 @@ namespace TestProject.Pages
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
+            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         #endregion
@@ -89,7 +100,7 @@ namespace TestProject.Pages
         /// <param name="errorExpected">
         ///     True if is error expected, otherwise false;
         /// </param>
-        public void Login(string username, string password, WebDriverWait wait, bool errorExpected = false)
+        public void Login(string username, string password, bool errorExpected = false)
         {
             if (errorExpected)
             {
@@ -106,24 +117,21 @@ namespace TestProject.Pages
 
             if (!errorExpected)
             {
-                wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
+                this.wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ShoppingCartLogoId)));
             }
         }
 
         /// <summary>
         ///     Check if login container is displayed.
         /// </summary>
-        /// <param name="wait">
-        ///     Web driver wait.
-        /// </param>
         /// <returns>
         ///     True if is visible, otherwise false.
         /// </returns>
-        public static bool IsLoginContainerDisplayed(WebDriverWait wait)
+        public bool IsLoginContainerDisplayed()
         {
             try
             {
-                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
+                this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
                 return true;
             }
             catch (WebDriverTimeoutException)
@@ -162,7 +170,7 @@ namespace TestProject.Pages
         {
             try
             {
-                driver.FindElement(By.Id(LoginButtonId)).Click();
+                this.driver.FindElement(By.Id(LoginButtonId)).Click();
             }
             catch(NotFoundException ex)
             {
@@ -177,7 +185,7 @@ namespace TestProject.Pages
         {
             try
             {
-                driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
+                this.driver.FindElement(By.ClassName(ErrorButtonClassName)).Click();
             }
             catch (NotFoundException ex)
             {
@@ -195,7 +203,7 @@ namespace TestProject.Pages
         {
             try
             {
-                var errorContainer = driver.FindElement(By.CssSelector(".error-message-container"));
+                var errorContainer = driver.FindElement(By.CssSelector(ErrorMessageContainerCssSelector));
                 return errorContainer.Text != string.Empty;
             }
             catch (NotFoundException ex)
@@ -218,7 +226,7 @@ namespace TestProject.Pages
         {
             try
             {
-                driver.FindElement(By.Id(fieldId)).SendKeys(value);
+                this.driver.FindElement(By.Id(fieldId)).SendKeys(value);
             }
             catch(NotFoundException ex)
             {
@@ -239,7 +247,7 @@ namespace TestProject.Pages
         {
             try
             {
-                return driver.FindElement(By.Id(fieldId)).Text;
+                return this.driver.FindElement(By.Id(fieldId)).Text;
             }
             catch (NotFoundException ex)
             {

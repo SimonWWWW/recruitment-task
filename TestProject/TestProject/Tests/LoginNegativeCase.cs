@@ -28,7 +28,6 @@ public class LoginNegativeCase : TestTemplate
         this.loginPage.Login(
             this.jsonDataDeserialized.CorrectUsername,
             this.jsonDataDeserialized.IncorrectPassword,
-            this.wait,
             true);
 
         this.CheckErrorMessage();
@@ -40,7 +39,6 @@ public class LoginNegativeCase : TestTemplate
         this.loginPage.Login(
             this.jsonDataDeserialized.IncorrectUsername,
             this.jsonDataDeserialized.CorrectPassword,
-            this.wait,
             true);
 
         this.CheckErrorMessage();
@@ -52,7 +50,6 @@ public class LoginNegativeCase : TestTemplate
         this.loginPage.Login(
             this.jsonDataDeserialized.IncorrectUsername,
             this.jsonDataDeserialized.IncorrectPassword,
-            this.wait,
             true);
 
         this.CheckErrorMessage();
@@ -64,7 +61,7 @@ public class LoginNegativeCase : TestTemplate
     /// </summary>
     private void CheckErrorMessage()
     {
-        Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url);
+        Assert.AreNotEqual(LoginPage.ExpectedUrlAfterLogin, driver.Url, $"Wrong cart url: {driver.Url}");
         Assert.IsTrue(loginPage.ErrorIsDisplayed());
         this.loginPage.CloseErrorButtonClick();
         Assert.IsFalse(loginPage.ErrorIsDisplayed());

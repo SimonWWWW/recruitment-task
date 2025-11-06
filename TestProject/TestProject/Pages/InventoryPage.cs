@@ -20,7 +20,15 @@ namespace TestProject.Pages
 
         private const string ShoppingCartProductCounterClassName = "shopping_cart_badge";
 
+        private const string ShoppingCartLinkClassName = "shopping_cart_link";
+
+        private const string CartItemClassName = "cart_item";
+
         private const string ButtonTagName = "button";
+
+        private const string CheckoutButtonId = "checkout";
+
+        public const string ExpectedCartUrl = "https://www.saucedemo.com/cart.html";
 
         #endregion
 
@@ -32,6 +40,8 @@ namespace TestProject.Pages
         private readonly IWebDriver driver;
 
         private List<IWebElement> productList;
+        private string chosenProductName;
+        private List<IWebElement> itemList;
 
         #endregion
 
@@ -68,7 +78,7 @@ namespace TestProject.Pages
         {
             Random random = new Random();
             var chosenProduct = this.productList.ElementAt(random.Next(0, this.productList.Count));
-            var chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName));
+            this.chosenProductName = chosenProduct.FindElement(By.ClassName(ProductNameClassName)).Text;
 
             TestContext.WriteLine($"Chosen product: {chosenProductName}");
 
@@ -79,7 +89,7 @@ namespace TestProject.Pages
         {
             try
             {
-                return Int32.Parse(driver.FindElement(By.ClassName(ShoppingCartProductCounterClassName)).Text);
+                return Int32.Parse(this.driver.FindElement(By.ClassName(ShoppingCartProductCounterClassName)).Text);
             }
             catch (NotFoundException) 
             {
@@ -99,6 +109,45 @@ namespace TestProject.Pages
                 TestContext.WriteLine($"Exception message: {ex.Message}");
             }
 
+        }
+
+        public void AddOneRandomProduct()
+        {
+            this.GetProductList();
+            AddProduct(this.GetOneRandomProduct());
+        }
+
+        public void ClickOnShoppingCart()
+        {
+            try
+            {
+                var shoppingCartElement = this.driver.FindElement(By.ClassName(ShoppingCartLinkClassName));
+                shoppingCartElement.Click();
+            }
+            catch (NotFoundException ex)
+            {
+                TestContext.WriteLine($"Exception message: {ex.Message}");
+            }
+        }
+
+        public void GetItemList()
+        {
+            this.itemList = this.driver.FindElements(By.ClassName(CartItemClassName)).ToList();
+        }
+
+
+        public bool CheckCartContent()
+        {
+            var productFromCart = this.itemList.First();
+
+            var productFromCartName = productFromCart.FindElement(By.ClassName(ProductNameClassName)).Text;
+
+            return productFromCartName.Equals(chosenProductName);
+        }
+
+        public void CheckoutButtonClick()
+        {
+            this.driver.FindElement(By.Id(CheckoutButtonId)).Click();
         }
 
         #endregion
