@@ -93,7 +93,7 @@ namespace TestProject.Ui.Pages
         public InventoryPage(IWebDriver driver)
         {
             this.driver = driver;
-            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         }
 
         #endregion

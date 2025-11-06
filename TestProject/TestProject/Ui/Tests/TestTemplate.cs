@@ -41,7 +41,7 @@ namespace TestProject.Ui.Tests
             this.driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
             new WebDriverWait(
                 driver,
-                TimeSpan.FromSeconds(15)).Until(
+                TimeSpan.FromSeconds(5)).Until(
                 ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
