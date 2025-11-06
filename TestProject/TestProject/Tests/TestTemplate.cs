@@ -32,7 +32,7 @@ namespace TestProject.Tests
         /// </summary>
         public JsonData jsonDataDeserialized;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void BaseSetup()
         {
             this.ReadAllJsonData();
@@ -42,7 +42,7 @@ namespace TestProject.Tests
             this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public void Teardown()
         {
             driver.Dispose();

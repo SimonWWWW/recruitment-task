@@ -10,7 +10,7 @@ namespace TestProject;
 public class LoginPositiveCase : TestTemplate
 {
     [Test]
-    public void CheckLoginAction()
+    public void CheckLoginPositiveAction()
     {
         var loginPage = new LoginPage(driver);
         loginPage.Login(

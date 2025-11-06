@@ -5,17 +5,12 @@ namespace TestProject;
 public class MainPageLoading : TestTemplate
 {
     [Test]
-    public void CheckTitle()
+    public void CheckTitleAndLogoVisibility()
     {
         Assert.AreEqual(
             ExpectedTitle,
             driver.Title,
             "Title is not as expected.");
-    }
-
-    [Test]
-    public void CheckLogoAndLoginInputsVisibility()
-    {
         Assert.IsTrue(
             LoginPage.IsLoginContainerDisplayed(this.wait),
             "Login container is not visible.");

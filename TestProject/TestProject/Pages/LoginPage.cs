@@ -248,28 +248,6 @@ namespace TestProject.Pages
             }
         }
 
-        /// <summary>
-        ///     Clear password and username fields.
-        /// </summary>
-        public void ClearFields()
-        {
-            try
-            {
-                driver.FindElement(By.Id(UsernameFieldId)).Clear();
-
-                // password with type = "password" - clear() is not working
-                var passwordElement = driver.FindElement(By.Id(PasswordFieldId));
-                for (int i = 0; i < passwordElement.Text.Length; i++)
-                {
-                    passwordElement.SendKeys(Keys.Backspace);
-                }
-            }
-            catch (NotFoundException ex)
-            {
-                TestContext.WriteLine($"Exception: {ex.Message}");
-            }
-        }
-
         #endregion
     }
 }
