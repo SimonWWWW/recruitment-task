@@ -12,7 +12,7 @@ namespace TestProject.Ui
         ///     Create driver method.
         /// </summary>
         /// <param name="isHeadless">
-        ///     If is headless option needed set true.
+        ///     True if is headless mode.
         /// </param>
         /// <returns>
         ///     IWebDriver.

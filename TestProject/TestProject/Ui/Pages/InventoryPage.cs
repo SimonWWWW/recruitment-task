@@ -162,15 +162,13 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                var addToCartButton = this.wait.Until(
-                    ExpectedConditions.ElementToBeClickable(productToAdd.FindElement(By.TagName(ButtonTagName))));
-                addToCartButton.Click();
+                this.wait.Until(
+                    ExpectedConditions.ElementToBeClickable(productToAdd.FindElement(By.TagName(ButtonTagName)))).Click();
             }
             catch (WebDriverTimeoutException ex)
             {
                 Assert.Fail($"Exception: {ex.Message}");
             }
-
         }
 
         /// <summary>
@@ -189,7 +187,7 @@ namespace TestProject.Ui.Pages
         {
             try
             {
-                var shoppingCartElement = driver.FindElement(By.ClassName(ShoppingCartLinkClassName));
+                var shoppingCartElement = this.driver.FindElement(By.ClassName(ShoppingCartLinkClassName));
                 shoppingCartElement.Click();
             }
             catch (NotFoundException ex)
@@ -203,7 +201,7 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void GetItemList()
         {
-            itemList = driver.FindElements(By.ClassName(CartItemClassName)).ToList();
+            this.itemList = this.driver.FindElements(By.ClassName(CartItemClassName)).ToList();
         }
 
         /// <summary>
@@ -214,11 +212,16 @@ namespace TestProject.Ui.Pages
         /// </returns>
         public bool CheckCartContent()
         {
-            var productFromCart = itemList.First();
-
-            var productFromCartName = productFromCart.FindElement(By.ClassName(ProductNameClassName)).Text;
-
-            return productFromCartName.Equals(chosenProductName);
+            var productFromCart = this.itemList.FirstOrDefault();
+            if(productFromCart == null)
+            {
+                return false;
+            }
+            else
+            {
+                var productFromCartName = productFromCart.FindElement(By.ClassName(ProductNameClassName)).Text;
+                return productFromCartName.Equals(chosenProductName);
+            }
         }
 
         /// <summary>
@@ -226,7 +229,14 @@ namespace TestProject.Ui.Pages
         /// </summary>
         public void CheckoutButtonClick()
         {
-            driver.FindElement(By.Id(CheckoutButtonId)).Click();
+            try
+            {
+                this.wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(CheckoutButtonId))).Click();
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                Assert.Fail($"Exception: {ex.Message}");
+            }
         }
 
         #endregion

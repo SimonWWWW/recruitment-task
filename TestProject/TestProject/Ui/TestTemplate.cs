@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace TestProject.Ui.Tests
+namespace TestProject.Ui
 {
     /// <summary>
     ///     Test template class.
@@ -59,7 +59,7 @@ namespace TestProject.Ui.Tests
             var jsonFilePath = Directory.EnumerateFiles(
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "Ui"), "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
-            this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
+            jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
         }
     }
 }

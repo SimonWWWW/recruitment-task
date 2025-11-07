@@ -94,9 +94,6 @@ namespace TestProject.Ui.Pages
         /// <param name="password">
         ///     Password.
         /// </param>
-        /// <param name="wait">
-        ///     WebDriverWait.
-        /// </param>
         /// <param name="errorExpected">
         ///     True if is error expected, otherwise false;
         /// </param>
@@ -133,10 +130,6 @@ namespace TestProject.Ui.Pages
             {
                 this.wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
                 return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
             }
             catch (WebDriverTimeoutException)
             {
