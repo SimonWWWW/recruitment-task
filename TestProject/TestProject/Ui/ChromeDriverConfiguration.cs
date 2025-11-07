@@ -17,7 +17,7 @@ namespace TestProject.Ui
         /// <returns>
         ///     IWebDriver.
         /// </returns>
-        public static IWebDriver CreateDriver(bool isHeadless = false)
+        public static IWebDriver CreateDriver(bool isHeadless)
         {
             IWebDriver driver;
             var chromeOptions = new ChromeOptions();

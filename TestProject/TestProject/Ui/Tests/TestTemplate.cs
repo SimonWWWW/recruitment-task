@@ -37,10 +37,10 @@ namespace TestProject.Ui.Tests
         public void BaseSetup()
         {
             this.ReadAllJsonData();
-            this.driver = ChromeDriverConfiguration.CreateDriver();
-            this.driver.Navigate().GoToUrl(jsonDataDeserialized.SauceDemoUrl);
+            this.driver = ChromeDriverConfiguration.CreateDriver(this.jsonDataDeserialized.IsHeadless);
+            this.driver.Navigate().GoToUrl(this.jsonDataDeserialized.SauceDemoUrl);
             new WebDriverWait(
-                driver,
+                this.driver,
                 TimeSpan.FromSeconds(5)).Until(
                 ExpectedConditions.ElementIsVisible(By.XPath(LoginContainerXPath)));
         }
@@ -57,7 +57,7 @@ namespace TestProject.Ui.Tests
         private void ReadAllJsonData()
         {
             var jsonFilePath = Directory.EnumerateFiles(
-                Path.Combine(AppContext.BaseDirectory, "Ui"), "inputs.json").First();
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "Ui"), "inputs.json").First();
             var jsonDataText = File.ReadAllText(jsonFilePath);
             this.jsonDataDeserialized = JsonConvert.DeserializeObject<JsonData>(jsonDataText);
         }
