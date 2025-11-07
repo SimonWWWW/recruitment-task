@@ -44,5 +44,15 @@
         ///     Postal code.
         /// </summary>
         public string PostalCode { get; set; }
+
+        /// <summary>
+        ///     Headless mode.
+        /// </summary>
+        private string Headless { get; set; }
+
+        /// <summary>
+        ///     True if is headless mode.
+        /// </summary>
+        public bool IsHeadless => Boolean.TryParse(Headless, out var parsed);
     }
 }

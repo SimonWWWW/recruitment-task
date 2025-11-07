@@ -6,6 +6,6 @@
   "incorrectPassword": "secretttt_sauce",
   "firstName": "Adam",
   "lastName": "Adamowski",
-  "postalCode": "12-345"
-  
+  "postalCode": "12-345",
+  "Headless": "false"
 }
