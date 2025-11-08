@@ -15,6 +15,6 @@ Dobór narzędzi: C# + Nunit + Selenium, C# + Nunit + HttpClient.
 Do raportowania użyłem allure, mimo, że mam jakiś problem z logowaniem tasków asynchronicznych takich jak requesty - stąd mój raport zawiera informacje, że testy api rzucają błędem.
 (wykorzystanie await AllureLifecycle.Instance.WrapInStepAsync nie działa i jest przestarzałe na najnowszych paczkach, myślę, że gdybym miał troszkę więcej czasu znalazłbym rozwiązanie). Extent Reports utracił możliwość (od jakiejś wersji) nadpisywania raportu w jeden (zamiast każdego osobnego dla każdego testu) przez co trzeba by było ogarniać klasę pomocniczą we własnym zakresie.
 
-!\[Raport testu](test\_report.png)
+!\[Raport testu](test_report.png)
 ===
 
