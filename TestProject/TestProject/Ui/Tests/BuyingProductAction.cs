@@ -9,7 +9,6 @@ namespace TestProject.Ui.Tests;
 ///     Buying product action class.
 /// </summary>
 [AllureNUnit]
-[AllureSuite("Purchase")]
 public class BuyingProductAction : TestTemplate
 {
     [Test]
