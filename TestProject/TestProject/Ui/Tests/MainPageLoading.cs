@@ -1,5 +1,6 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using TestProject.Ui.Pages;
 
 namespace TestProject.Ui.Tests;
@@ -8,6 +9,7 @@ namespace TestProject.Ui.Tests;
 ///     Main page loading class.
 /// </summary>
 [AllureNUnit]
+[AllureSuite("Login")]
 public class MainPageLoading : TestTemplate
 {
     [Test]

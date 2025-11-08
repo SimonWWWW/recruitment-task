@@ -1,4 +1,5 @@
 ﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using System.Net;
 using System.Text.Json;
 
@@ -8,6 +9,7 @@ namespace TestProject.Api.Tests
     ///     Get user positive case test.
     /// </summary>
     [AllureNUnit]
+    [AllureSuite("Api")]
     public class GetUserPositive : ApiTestTemplate
     {
         [Test]
