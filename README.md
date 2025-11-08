@@ -9,7 +9,7 @@ Przykłady testów GUI do napisania w przyszłości:
 
 Przykłady testów API do napisania w przyszłości:
 - usuwanie usera
-- update danych user
+- update danych usera
 
 Dobór narzędzi: C# + Nunit + Selenium, C# + Nunit + HttpClient.
 Do raportowania użyłem allure, mimo, że mam jakiś problem z logowaniem tasków asynchronicznych takich jak requesty - stąd mój raport zawiera informacje, że testy api rzucają błędem.
