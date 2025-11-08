@@ -1,0 +1,25 @@
+﻿using System.Text.Json;
+
+namespace TestProject.Api.Tests
+{
+    /// <summary>
+    ///     Get user positive case.
+    /// </summary>
+    public class GetUserPositive : ApiTestTemplate
+    {
+        [Test]
+        public async Task GetUser_ExistingId_ShouldReturnUser()
+        {
+            var expectedResponseUser = 
+                this.CreateExpectedUser(1, "George", "Bluth",
+                "george.bluth@reqres.in", "https://reqres.in/img/faces/1-image.jpg");
+
+            var response = await this.client.GetAsync(CreateUsersUriWithSpecifiedId(1));
+            Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var responseBodyDeserialized = JsonSerializer.Deserialize<Root>(responseBody);
+            CompareUser(expectedResponseUser, responseBodyDeserialized.Data, false);
+        }
+    }
+}

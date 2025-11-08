@@ -7,5 +7,6 @@
   "firstName": "Adam",
   "lastName": "Adamowski",
   "postalCode": "12-345",
-  "Headless": "false"
+  "headless": "false",
+  "reqresUrl": "https://reqres.in"
 }

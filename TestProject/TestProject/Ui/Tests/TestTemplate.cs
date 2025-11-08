@@ -54,7 +54,7 @@ namespace TestProject.Ui.Tests
         /// <summary>
         ///     Read all json file data.
         /// </summary>
-        private void ReadAllJsonData()
+        protected void ReadAllJsonData()
         {
             var jsonFilePath = Directory.EnumerateFiles(
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "Ui"), "inputs.json").First();
