@@ -10,9 +10,9 @@ namespace TestProject.Api.Tests
         [Test]
         public async Task GetUser_ExistingId_ShouldReturnUser()
         {
-            var expectedResponseUser = 
-                this.CreateExpectedUser(1, "George", "Bluth",
-                "george.bluth@reqres.in", "https://reqres.in/img/faces/1-image.jpg");
+            var expectedResponseUser =
+                CreateExpectedUser("George", "Bluth",
+                "george.bluth@reqres.in", "https://reqres.in/img/faces/1-image.jpg", 1);
 
             var response = await this.client.GetAsync(CreateUsersUriWithSpecifiedId(1));
             Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);

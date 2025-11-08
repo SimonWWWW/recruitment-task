@@ -9,7 +9,8 @@ namespace TestProject.Api.Tests
         [Test]
         public async Task AddUser_ShouldReturnCreatedResponse()
         {
-            var newUser = this.CreateExpectedUser("Adam", "Adamowski", "adam.adamowski@example.com", "https://reqres.in/img/faces/1-image.jpg");
+            var newUser = CreateExpectedUser("Adam", "Adamowski",
+                "adam.adamowski@example.com", "https://reqres.in/img/faces/1-image.jpg", null);
 
             var json = JsonSerializer.Serialize(newUser);
             var content = new StringContent(json, Encoding.UTF8, JsonMediaType);
@@ -17,8 +18,7 @@ namespace TestProject.Api.Tests
 
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             var responseBody = await response.Content.ReadAsStringAsync();
-            var responseBodyDeserialized = JsonSerializer.Deserialize<Data>(responseBody);
-            CompareUser(newUser, responseBodyDeserialized);
+            Assert.IsTrue(responseBody.Contains(json.Replace("}",string.Empty)));
         }
 
     }

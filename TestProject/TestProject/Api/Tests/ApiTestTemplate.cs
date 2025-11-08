@@ -78,35 +78,6 @@ namespace TestProject.Api.Tests
         /// <summary>
         ///     Create expected user in root.
         /// </summary>
-        /// <param name="firstName">
-        ///     User first name.
-        /// </param>
-        /// <param name="lastName">
-        ///     User last name.
-        /// </param>
-        /// <param name="email">
-        ///     User email.
-        /// </param>
-        /// <param name="avatar">
-        ///     User avatar.
-        /// </param>
-        /// <returns>
-        ///     Expected user in root.
-        /// </returns>
-        protected Data CreateExpectedUser(string firstName, string lastName, string email, string avatar)
-        {
-            return new Data()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Avatar = avatar
-            };
-        }
-
-        /// <summary>
-        ///     Create expected user in root.
-        /// </summary>
         /// <param name="id">
         ///     User id.
         /// </param>
@@ -125,7 +96,7 @@ namespace TestProject.Api.Tests
         /// <returns>
         ///     Expected user in root.
         /// </returns>
-        protected Data CreateExpectedUser(int id, string firstName, string lastName, string email, string avatar)
+        protected static Data CreateExpectedUser(string firstName, string lastName, string email, string avatar, int? id = null)
         {
             return new Data()
             {

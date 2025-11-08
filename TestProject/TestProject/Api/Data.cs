@@ -11,6 +11,7 @@ namespace TestProject.Api
         ///     Id.
         /// </summary>
         [JsonPropertyName("id")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Id { get; set; }
 
         /// <summary>
