@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
 
 namespace TestProject.Api.Tests
 {
     /// <summary>
-    ///     Api test template
+    ///     Api test template.
     /// </summary>
     public class ApiTestTemplate
     {
@@ -76,7 +71,7 @@ namespace TestProject.Api.Tests
         }
 
         /// <summary>
-        ///     Create expected user in root.
+        ///     Create expected user data in root.
         /// </summary>
         /// <param name="id">
         ///     User id.

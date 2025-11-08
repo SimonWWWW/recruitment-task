@@ -2,6 +2,9 @@
 
 namespace TestProject.Api.Tests
 {
+    /// <summary>
+    ///     Get user negative case test.
+    /// </summary>
     public class GetUserNegative : ApiTestTemplate
     {
         [Test]

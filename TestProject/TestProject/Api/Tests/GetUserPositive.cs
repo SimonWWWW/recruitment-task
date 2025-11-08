@@ -3,7 +3,7 @@
 namespace TestProject.Api.Tests
 {
     /// <summary>
-    ///     Get user positive case.
+    ///     Get user positive case test.
     /// </summary>
     public class GetUserPositive : ApiTestTemplate
     {
