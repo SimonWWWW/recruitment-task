@@ -1,12 +1,15 @@
-﻿using System.Net;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using System.Net;
 using System.Text;
 using System.Text.Json;
-
 namespace TestProject.Api.Tests
 {
     /// <summary>
     ///     Add user test.
     /// </summary>
+    [AllureNUnit]
+    [AllureSuite("Api")]
     public class AddUser : ApiTestTemplate
     {
         [Test]
@@ -19,10 +22,8 @@ namespace TestProject.Api.Tests
 
             var response = await this.client.PostAsync(UsersUri, content);
             var responseBody = await response.Content.ReadAsStringAsync();
-
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             Assert.IsTrue(responseBody.Contains(json.Replace("}", string.Empty)));
         }
-
     }
 }

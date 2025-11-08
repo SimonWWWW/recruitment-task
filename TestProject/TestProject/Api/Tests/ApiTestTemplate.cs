@@ -1,10 +1,12 @@
-﻿using System.Net.Http.Headers;
+﻿using Allure.NUnit;
+using System.Net.Http.Headers;
 
 namespace TestProject.Api.Tests
 {
     /// <summary>
     ///     Api test template.
     /// </summary>
+    [AllureNUnit]
     public class ApiTestTemplate
     {
         #region Contants

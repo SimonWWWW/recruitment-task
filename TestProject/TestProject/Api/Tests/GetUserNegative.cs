@@ -1,10 +1,14 @@
-﻿using System.Net;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using System.Net;
 
 namespace TestProject.Api.Tests
 {
     /// <summary>
     ///     Get user negative case test.
     /// </summary>
+    [AllureNUnit]
+    [AllureSuite("Api")]
     public class GetUserNegative : ApiTestTemplate
     {
         [Test]
